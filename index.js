@@ -65,7 +65,7 @@ function countSentences(paragraph) {
 countSentences(paragraph);
 
 function countConversations(paragraph) {
-  let arr = paragraph.split('');
+  let arr = paragraph.split(`"`);
   let PATTERN = /thin/;
   const filtered = arr.filter(function (str) {
     return PATTERN.test(str);
