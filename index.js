@@ -47,25 +47,17 @@ Don't ask questions - that was the first rule for a quiet life with the Dursleys
 Uncle Vernon entered the kitchen as Harry was turning over the bacon.
 "Comb your hair!" he barked, by way of a morning greeting. 
 `;
-function countOccurences(string, word) {
+
+//A. How many times does the word occur in the excerpt.
+function wordOccurence(string, word) {
   return string.split(word).length - 1;
 }
-let count = countOccurences(paragraph, "thin");
-// console.log(count);
+let count = wordOccurence(paragraph, "thin");
+console.log(count);
 
+//B. List all sentences in which the word appears
 function countSentences(paragraph) {
   let arr = paragraph.split(".");
-  let PATTERN = /thin/;
-  const filtered = arr.filter(function (str) {
-    return PATTERN.test(str);
-  });
-  //   console.log(filtered);
-  //   console.log(filtered.length);
-}
-countSentences(paragraph);
-
-function countConversations(paragraph) {
-  let arr = paragraph.split(`"`);
   let PATTERN = /thin/;
   const filtered = arr.filter(function (str) {
     return PATTERN.test(str);
@@ -73,4 +65,43 @@ function countConversations(paragraph) {
   console.log(filtered);
   console.log(filtered.length);
 }
-countConversations(paragraph);
+countSentences(paragraph);
+
+//2) List all conversations in the excerpt above
+function allConversations(str) {
+  let last = -1;
+  let conversations = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] == '"' && last == -1) last = i;
+    else if (str[i] == '"' && last != -1) {
+      let pos = last;
+      last = -1;
+      let len = i - 1 - pos;
+      let ans;
+      if (pos < len) ans = str.substring(pos + 1, len + 1);
+      else ans = str.substring(pos + 1, len + pos + 1);
+
+      conversations.push(ans);
+    }
+  }
+  console.log(conversations);
+  return conversations;
+}
+var x = allConversations(paragraph);
+
+//C. Is the word mentioned in a conversation? Which ones and how many times
+function wordOccurInConvo(string, word) {
+  return string.split(word).length - 1;
+}
+
+let sum = 0;
+let convoInWordOccur = [];
+for (let i = 0; i < x.length; i++) {
+  let temp = wordOccurInConvo(x[i], "thin");
+  if (temp > 0) {
+    convoInWordOccur.push(x[i]);
+    sum = sum + temp;
+  }
+}
+console.log(sum);
+console.log(convoInWordOccur);
